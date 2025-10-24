@@ -9,7 +9,7 @@
 
 ---
 
-# 👋 Xin chào, mình là **Phan Long**
+# 👋 Xin chào, mình là **Phan Đình Long**
 
 🎓 Hiện tại mình đang học và tìm hiểu về **phát triển Odoo (Odoo Development)** — nền tảng ERP mã nguồn mở mạnh mẽ.  
 💡 Mình đặc biệt hứng thú với cách Odoo tổ chức mô hình dữ liệu, xử lý logic nghiệp vụ và cách mở rộng tính năng qua các module tùy chỉnh.  
