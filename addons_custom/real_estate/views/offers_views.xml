@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Action -->
+    <record id="offers_action" model="ir.actions.act_window">
+        <field name="name">Offers</field>
+        <field name="res_model">offers</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- Menu -->
+    <menuitem id="offers_root" name="Real Estate"/>
+    <menuitem id="offers_menu" name="Offers" parent="offers_root" action="offers_action"/>
+
+    <!-- List View -->
+    <record id="view_offers_list" model="ir.ui.view">
+        <field name="name">view.offers.list</field>
+        <field name="model">offers</field>
+        <field name="arch" type="xml">
+            <list string="Offers">
+                <field name="name"/>
+                <field name="property"/>
+                <field name="expected_price"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_offers_form" model="ir.ui.view">
+        <field name="name">view.offers.form</field>
+        <field name="model">offers</field>
+        <field name="arch" type="xml">
+            <form string="Offers">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="property"/>
+                            <field name="expected_price"/>
+                            <field name="currency_id"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Image Offers">
+                            <group>
+                                <field name="image_offers" widget="image" class="oe_avatar"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,50 @@
+<odoo>
+  <data>
+    <record id="sales_person_action" model="ir.actions.act_window">
+        <field name="name">Sales Person</field>
+        <field name="res_model">sales_person</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="sales_person_root" name="Sales Person" action="sales_person_action" parent="real_estate_root">
+    </menuitem>
+    
+    <record id="sales_person_view_form" model="ir.ui.view">
+        <field name="name">sales.person.form</field>
+        <field name="model">sales_person</field>
+        <field name="arch" type="xml">
+            <form string="Sales Person">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="gender"/>
+                            <field name="activate"/>
+                        </group>
+                        <group>
+                            <field name="phone"/>
+                            <field name="email"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Description">
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="sales_person_view_tree" model="ir.ui.view">
+        <field name="name">sales.person.list</field>
+        <field name="model">sales_person</field>
+        <field name="arch" type="xml">
+            <list string="List of Sales Person">
+                <field name="name"/>
+                <field name="phone"/>
+                <field name="email"/>
+            </list>
+        </field>
+    </record>
+  </data>
+</odoo>

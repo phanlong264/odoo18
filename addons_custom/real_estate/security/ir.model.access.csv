@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_real_estate,access_real_estate,model_real_estate,base.group_user,1,1,1,1
+access_sales_person,access_sales_person,model_sales_person,base.group_user,1,1,1,1
+access_buyers,access_buyers,model_buyers,base.group_user,1,1,1,1
+access_offers,access_offers,model_offers,base.group_user,1,1,1,1
+access_image_offers,access_image_offers,model_image_offers,base.group_user,1,1,1,1
+
