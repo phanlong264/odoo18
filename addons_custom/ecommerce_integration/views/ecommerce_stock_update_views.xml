@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Stock Update Wizard Form -->
+    <record id="view_ecommerce_stock_update_wizard_form" model="ir.ui.view">
+        <field name="name">ecommerce.stock.update.wizard.form</field>
+        <field name="model">ecommerce.stock.update.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Cập nhật tồn kho">
+                <header>
+                    <button name="action_update_stock" string="Cập nhật" type="object"
+                            class="btn-primary" invisible="state == 'done'"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="shop_id" readonly="1"/>
+                            <field name="platform_id" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="state" invisible="1"/>
+                        </group>
+                    </group>
+                    
+                    <group invisible="state != 'done'" col="4">
+                        <field name="total_count" readonly="1"/>
+                        <field name="success_count" readonly="1"/>
+                        <field name="failed_count" readonly="1"/>
+                    </group>
+                    
+                    <notebook invisible="state != 'done'">
+                        <!-- Tab: Tất cả -->
+                        <page string="Tất cả" name="all">
+                            <field name="update_line_ids" readonly="1">
+                                <list string="Tất cả sản phẩm" create="0" edit="0" delete="0">
+                                    <field name="status" widget="badge" 
+                                           decoration-success="status == 'success'"
+                                           decoration-danger="status == 'failed'"/>
+                                    <field name="product_name" string="Tên sản phẩm"/>
+                                    <field name="platform_product_id" string="ID sản phẩm"/>
+                                    <field name="sku" string="Mã sản phẩm"/>
+                                    <field name="old_stock" string="Kho cũ"/>
+                                    <field name="new_stock" string="Kho mới"/>
+                                    <field name="price" string="Giá bán"/>
+                                    <field name="currency_id" column_invisible="1"/>
+                                    <field name="message" string="Thông báo"/>
+                                </list>
+                            </field>
+                        </page>
+                        
+                        <!-- Tab: Cập nhật thành công -->
+                        <page string="Cập nhật thành công" name="success">
+                            <field name="update_line_ids" readonly="1"
+                                   domain="[('status', '=', 'success')]">
+                                <list string="Cập nhật thành công" create="0" edit="0" delete="0"
+                                      decoration-success="1">
+                                    <field name="status" column_invisible="1"/>
+                                    <field name="product_name" string="Tên sản phẩm"/>
+                                    <field name="platform_product_id" string="ID sản phẩm"/>
+                                    <field name="sku" string="Mã sản phẩm"/>
+                                    <field name="old_stock" string="Kho Odoo"/>
+                                    <field name="new_stock" string="Kho sàn"/>
+                                    <field name="price" string="Giá bán"/>
+                                    <field name="currency_id" column_invisible="1"/>
+                                </list>
+                            </field>
+                        </page>
+                        
+                        <!-- Tab: Cập nhật thất bại -->
+                        <page string="Cập nhật thất bại" name="failed">
+                            <field name="update_line_ids" readonly="1"
+                                   domain="[('status', '=', 'failed')]">
+                                <list string="Cập nhật thất bại" create="0" edit="0" delete="0"
+                                      decoration-danger="1">
+                                    <field name="status" column_invisible="1"/>
+                                    <field name="product_name" string="Tên sản phẩm"/>
+                                    <field name="platform_product_id" string="Mã sản phẩm sàn"/>
+                                    <field name="sku" string="SKU"/>
+                                    <field name="old_stock" string="Tồn kho"/>
+                                    <field name="message" string="Lỗi"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                    
+                    <div class="alert alert-info" role="alert" invisible="state == 'done'">
+                        <i class="fa fa-info-circle" title="Thông tin"/> 
+                        <strong>Hướng dẫn:</strong>
+                        <p class="mb-0">
+                            Nhấn "Cập nhật" để đồng bộ tồn kho từ Odoo lên sàn TMĐT.
+                            Hệ thống sẽ cập nhật tồn kho cho tất cả sản phẩm đang hoạt động.
+                        </p>
+                    </div>
+                </sheet>
+                <footer>
+                    <button string="Đóng" special="cancel" class="btn-secondary"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+</odoo>

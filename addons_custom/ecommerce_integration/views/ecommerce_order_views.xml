@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Import Wizard Form -->
+    <record id="view_ecommerce_order_import_wizard_form" model="ir.ui.view">
+        <field name="name">ecommerce.order.import.wizard.form</field>
+        <field name="model">ecommerce.order.import.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Import đơn hàng">
+                <group>
+                    <group>
+                        <field name="shop_id" readonly="1"/>
+                        <field name="platform_id" readonly="1"/>
+                    </group>
+                    <group>
+                        <label for="date_from" string="Ngày tạo"/>
+                        <div class="o_row">
+                            <field name="date_from" widget="date" class="oe_inline"/>
+                            <span class="mx-2">-</span>
+                            <field name="date_to" widget="date" class="oe_inline"/>
+                        </div>
+                    </group>
+                </group>
+                
+                <group string="Điều kiện lọc">
+                    <field name="status_filter" widget="many2many_tags" 
+                           placeholder="Chọn trạng thái..."/>
+                </group>
+                
+                <group string="Tùy chọn">
+                    <field name="auto_sync_to_odoo"/>
+                    <field name="update_existing"/>
+                </group>
+                
+                <div class="alert alert-info" role="alert">
+                    <i class="fa fa-info-circle"/> 
+                    <strong>Hướng dẫn:</strong>
+                    <ul class="mb-0">
+                        <li>Chọn khoảng thời gian tạo đơn hàng cần import</li>
+                        <li>Lọc theo trạng thái đơn hàng (để trống sẽ lấy tất cả)</li>
+                        <li>Bật "Tự động đồng bộ vào Odoo" để tạo Sale Order tự động</li>
+                        <li>Bật "Cập nhật đơn hàng đã tồn tại" để cập nhật thông tin mới nhất</li>
+                    </ul>
+                </div>
+                
+                <footer>
+                    <button name="action_import_orders" string="Bắt đầu Import" 
+                            type="object" class="btn-primary" icon="fa-download"/>
+                    <button string="Hủy" special="cancel" class="btn-secondary"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!-- Order List View -->
+    <record id="view_ecommerce_order_list" model="ir.ui.view">
+        <field name="name">ecommerce.order.list</field>
+        <field name="model">ecommerce.order</field>
+        <field name="arch" type="xml">
+            <list string="Đơn hàng" default_order="order_date desc"
+                  decoration-success="status == 'completed'"
+                  decoration-warning="status in ('pending', 'confirmed')"
+                  decoration-info="status in ('processing', 'shipping')"
+                  decoration-muted="status == 'cancelled'">
+                <field name="name" string="Số đơn hàng"/>
+                <field name="order_date" string="Ngày đặt"/>
+                <field name="platform_id" string="Sàn"/>
+                <field name="shop_id" string="Gian hàng"/>
+                <field name="customer_name" string="Khách hàng"/>
+                <field name="customer_phone" string="SĐT"/>
+                <field name="total_amount" string="Tổng tiền" widget="monetary"/>
+                <field name="currency_id" column_invisible="1"/>
+                <field name="status" string="Trạng thái" widget="badge"
+                       decoration-success="status == 'completed'"
+                       decoration-warning="status in ('pending', 'confirmed')"
+                       decoration-info="status in ('processing', 'shipping', 'delivered')"
+                       decoration-danger="status == 'cancelled'"/>
+                <field name="payment_status" string="Thanh toán" widget="badge"
+                       decoration-success="payment_status == 'paid'"
+                       decoration-warning="payment_status == 'partial'"
+                       decoration-danger="payment_status == 'unpaid'"/>
+                <field name="is_synced" string="Đã đồng bộ" widget="boolean_toggle"/>
+                <button name="action_sync_to_odoo" type="object" 
+                        string="Đồng bộ" icon="fa-refresh"
+                        invisible="is_synced"
+                        class="btn-primary btn-sm"/>
+                <button name="action_open_odoo_order" type="object"
+                        string="Xem trong Odoo" icon="fa-external-link"
+                        invisible="not is_synced"
+                        class="btn-link btn-sm"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Order Form View -->
+    <record id="view_ecommerce_order_form" model="ir.ui.view">
+        <field name="name">ecommerce.order.form</field>
+        <field name="model">ecommerce.order</field>
+        <field name="arch" type="xml">
+            <form string="Đơn hàng">
+                <header>
+                    <button name="action_sync_to_odoo" type="object" 
+                            string="Đồng bộ vào Odoo" class="btn-primary"
+                            invisible="is_synced" icon="fa-refresh"/>
+                    <button name="action_open_odoo_order" type="object"
+                            string="Mở trong Odoo" class="btn-secondary"
+                            invisible="not is_synced" icon="fa-external-link"/>
+                    <field name="status" widget="statusbar" 
+                           statusbar_visible="pending,confirmed,processing,shipping,delivered,completed"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_open_odoo_order" type="object"
+                                class="oe_stat_button" icon="fa-shopping-cart"
+                                invisible="not is_synced">
+                            <field name="odoo_sale_order_id" widget="statinfo" 
+                                   string="Sale Order"/>
+                        </button>
+                    </div>
+                    
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+                    
+                    <group>
+                        <group string="Thông tin đơn hàng">
+                            <field name="order_id" readonly="1"/>
+                            <field name="platform_id"/>
+                            <field name="shop_id"/>
+                            <field name="order_date"/>
+                            <field name="tracking_number"/>
+                        </group>
+                        <group string="Thông tin khách hàng">
+                            <field name="customer_name"/>
+                            <field name="customer_phone"/>
+                            <field name="customer_email"/>
+                            <field name="shipping_address"/>
+                        </group>
+                    </group>
+                    
+                    <notebook>
+                        <page string="Chi tiết sản phẩm" name="order_lines">
+                            <field name="order_line_ids">
+                                <list editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="product_name"/>
+                                    <field name="variant_name"/>
+                                    <field name="product_sku"/>
+                                    <field name="quantity"/>
+                                    <field name="unit_price" widget="monetary"/>
+                                    <field name="subtotal" widget="monetary" sum="Tổng"/>
+                                    <field name="currency_id" column_invisible="1"/>
+                                    <field name="note"/>
+                                </list>
+                            </field>
+                        </page>
+                        
+                        <page string="Thanh toán &amp; Vận chuyển" name="payment_shipping">
+                            <group>
+                                <group string="Thanh toán">
+                                    <field name="payment_status"/>
+                                    <field name="payment_method"/>
+                                    <field name="currency_id"/>
+                                </group>
+                                <group string="Vận chuyển">
+                                    <field name="shipping_method"/>
+                                    <field name="shipping_fee" widget="monetary"/>
+                                </group>
+                            </group>
+                            
+                            <group>
+                                <group string="Tổng tiền">
+                                    <field name="subtotal" widget="monetary" readonly="1"/>
+                                    <field name="shipping_fee" widget="monetary"/>
+                                    <field name="discount_amount" widget="monetary"/>
+                                    <field name="total_amount" widget="monetary" readonly="1" 
+                                           class="oe_subtotal_footer_separator"/>
+                                </group>
+                            </group>
+                        </page>
+                        
+                        <page string="Đồng bộ Odoo" name="odoo_sync">
+                            <group>
+                                <field name="is_synced" readonly="1"/>
+                                <field name="sync_date" readonly="1" 
+                                       invisible="not is_synced"/>
+                                <field name="odoo_sale_order_id" readonly="1"
+                                       invisible="not is_synced"/>
+                            </group>
+                        </page>
+                        
+                        <page string="Ghi chú" name="note">
+                            <field name="note" placeholder="Ghi chú về đơn hàng..."/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- Order Search View -->
+    <record id="view_ecommerce_order_search" model="ir.ui.view">
+        <field name="name">ecommerce.order.search</field>
+        <field name="model">ecommerce.order</field>
+        <field name="arch" type="xml">
+            <search string="Tìm kiếm đơn hàng">
+                <field name="name" string="Số đơn hàng"/>
+                <field name="order_id" string="Mã đơn"/>
+                <field name="customer_name" string="Khách hàng"/>
+                <field name="customer_phone" string="SĐT"/>
+                <field name="shop_id" string="Gian hàng"/>
+                <field name="platform_id" string="Sàn"/>
+                
+                <filter name="filter_today" string="Hôm nay"
+                        domain="[('order_date', '&gt;=', datetime.datetime.now().replace(hour=0, minute=0, second=0))]"/>
+                <filter name="filter_this_week" string="Tuần này"
+                        domain="[('order_date', '&gt;=', (context_today() - datetime.timedelta(days=context_today().weekday())).strftime('%Y-%m-%d'))]"/>
+                <filter name="filter_this_month" string="Tháng này"
+                        domain="[('order_date', '&gt;=', datetime.datetime.now().replace(day=1, hour=0, minute=0, second=0))]"/>
+                
+                <separator/>
+                <filter name="filter_pending" string="Chờ xác nhận"
+                        domain="[('status', '=', 'pending')]"/>
+                <filter name="filter_confirmed" string="Đã xác nhận"
+                        domain="[('status', '=', 'confirmed')]"/>
+                <filter name="filter_processing" string="Đang xử lý"
+                        domain="[('status', '=', 'processing')]"/>
+                <filter name="filter_shipping" string="Đang giao"
+                        domain="[('status', '=', 'shipping')]"/>
+                <filter name="filter_completed" string="Hoàn thành"
+                        domain="[('status', '=', 'completed')]"/>
+                <filter name="filter_cancelled" string="Đã hủy"
+                        domain="[('status', '=', 'cancelled')]"/>
+                
+                <separator/>
+                <filter name="filter_synced" string="Đã đồng bộ"
+                        domain="[('is_synced', '=', True)]"/>
+                <filter name="filter_not_synced" string="Chưa đồng bộ"
+                        domain="[('is_synced', '=', False)]"/>
+                
+                <group expand="0" string="Nhóm theo">
+                    <filter name="group_platform" string="Sàn TMĐT" 
+                            context="{'group_by': 'platform_id'}"/>
+                    <filter name="group_shop" string="Gian hàng"
+                            context="{'group_by': 'shop_id'}"/>
+                    <filter name="group_status" string="Trạng thái"
+                            context="{'group_by': 'status'}"/>
+                    <filter name="group_date" string="Ngày đặt"
+                            context="{'group_by': 'order_date:month'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Order Action -->
+    <record id="action_ecommerce_order" model="ir.actions.act_window">
+        <field name="name">Đơn hàng sàn</field>
+        <field name="res_model">ecommerce.order</field>
+        <field name="view_mode">list,form</field>
+        <field name="context">{
+            'search_default_filter_not_synced': 1,
+        }</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Chưa có đơn hàng nào
+            </p>
+            <p>
+                Sử dụng chức năng Import để lấy đơn hàng từ các sàn TMĐT.
+            </p>
+        </field>
+    </record>
+
+</odoo>

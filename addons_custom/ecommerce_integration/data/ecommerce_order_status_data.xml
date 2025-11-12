@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Order Status Data -->
+        <record id="order_status_pending" model="ecommerce.order.status">
+            <field name="name">Chờ xác nhận</field>
+            <field name="code">pending</field>
+            <field name="sequence">1</field>
+            <field name="color">1</field>
+        </record>
+
+        <record id="order_status_confirmed" model="ecommerce.order.status">
+            <field name="name">Đã xác nhận</field>
+            <field name="code">confirmed</field>
+            <field name="sequence">2</field>
+            <field name="color">3</field>
+        </record>
+
+        <record id="order_status_processing" model="ecommerce.order.status">
+            <field name="name">Đang xử lý</field>
+            <field name="code">processing</field>
+            <field name="sequence">3</field>
+            <field name="color">4</field>
+        </record>
+
+        <record id="order_status_shipping" model="ecommerce.order.status">
+            <field name="name">Đang giao hàng</field>
+            <field name="code">shipping</field>
+            <field name="sequence">4</field>
+            <field name="color">5</field>
+        </record>
+
+        <record id="order_status_delivered" model="ecommerce.order.status">
+            <field name="name">Đã giao hàng</field>
+            <field name="code">delivered</field>
+            <field name="sequence">5</field>
+            <field name="color">6</field>
+        </record>
+
+        <record id="order_status_completed" model="ecommerce.order.status">
+            <field name="name">Hoàn thành</field>
+            <field name="code">completed</field>
+            <field name="sequence">6</field>
+            <field name="color">10</field>
+        </record>
+
+        <record id="order_status_cancelled" model="ecommerce.order.status">
+            <field name="name">Đã hủy</field>
+            <field name="code">cancelled</field>
+            <field name="sequence">7</field>
+            <field name="color">1</field>
+        </record>
+
+        <record id="order_status_returned" model="ecommerce.order.status">
+            <field name="name">Hoàn trả</field>
+            <field name="code">returned</field>
+            <field name="sequence">8</field>
+            <field name="color">8</field>
+        </record>
+    </data>
+</odoo>

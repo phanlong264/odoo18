@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+    <!-- Submenu cho từng sàn - dưới Configuration để không ảnh hưởng dashboard chính -->
+    <record id="action_ecommerce_shop_shopee" model="ir.actions.act_window">
+        <field name="name">Shopee - Danh sách chi tiết</field>
+        <field name="res_model">ecommerce.shop</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('platform_code', '=', 'shopee')]</field>
+        <field name="context">{
+            'search_default_active': 1,
+            'default_platform_code': 'shopee',
+        }</field>
+    </record>
+
+    <record id="action_ecommerce_shop_tiktok" model="ir.actions.act_window">
+        <field name="name">TikTok Shop - Danh sách chi tiết</field>
+        <field name="res_model">ecommerce.shop</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('platform_code', '=', 'tiktok')]</field>
+        <field name="context">{
+            'search_default_active': 1,
+            'default_platform_code': 'tiktok',
+        }</field>
+    </record>
+
+    <record id="action_ecommerce_shop_lazada" model="ir.actions.act_window">
+        <field name="name">Lazada - Danh sách chi tiết</field>
+        <field name="res_model">ecommerce.shop</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('platform_code', '=', 'lazada')]</field>
+        <field name="context">{
+            'search_default_active': 1,
+            'default_platform_code': 'lazada',
+        }</field>
+    </record>
+
+    <record id="action_ecommerce_shop_amazon" model="ir.actions.act_window">
+        <field name="name">Amazon - Danh sách chi tiết</field>
+        <field name="res_model">ecommerce.shop</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('platform_code', '=', 'amazon')]</field>
+        <field name="context">{
+            'search_default_active': 1,
+            'default_platform_code': 'amazon',
+        }</field>
+    </record>
+
+    <!-- Menu items dưới Configuration > Quản lý theo sàn -->
+    <menuitem id="menu_shops_by_platform"
+              name="Quản lý theo sàn"
+              parent="menu_ecommerce_configuration"
+              sequence="20"/>
+
+    <menuitem id="menu_ecommerce_shop_shopee"
+              name="Shopee"
+              parent="menu_shops_by_platform"
+              action="action_ecommerce_shop_shopee"
+              sequence="1"/>
+
+    <menuitem id="menu_ecommerce_shop_tiktok"
+              name="TikTok Shop"
+              parent="menu_shops_by_platform"
+              action="action_ecommerce_shop_tiktok"
+              sequence="2"/>
+
+    <menuitem id="menu_ecommerce_shop_lazada"
+              name="Lazada"
+              parent="menu_shops_by_platform"
+              action="action_ecommerce_shop_lazada"
+              sequence="3"/>
+
+    <menuitem id="menu_ecommerce_shop_amazon"
+              name="Amazon"
+              parent="menu_shops_by_platform"
+              action="action_ecommerce_shop_amazon"
+              sequence="4"/>
+
+</odoo>

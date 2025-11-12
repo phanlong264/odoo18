@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        
+        <!-- Platform: Shopee -->
+        <record id="platform_shopee" model="ecommerce.platform">
+            <field name="name">Shopee</field>
+            <field name="code">shopee</field>
+            <field name="sequence">1</field>
+            <field name="color">#EE4D2D</field>
+            <field name="icon">fa-shopping-bag</field>
+            <field name="oauth_url">https://partner.shopeemobile.com/api/v2/shop/auth_partner</field>
+            <field name="api_endpoint">https://partner.shopeemobile.com/api/v2</field>
+        </record>
+
+        <!-- Platform: TikTok Shop -->
+        <record id="platform_tiktok" model="ecommerce.platform">
+            <field name="name">TikTok Shop</field>
+            <field name="code">tiktok</field>
+            <field name="sequence">2</field>
+            <field name="color">#000000</field>
+            <field name="icon">fa-music</field>
+            <field name="oauth_url">https://auth.tiktok-shops.com/oauth/authorize</field>
+            <field name="api_endpoint">https://open-api.tiktokglobalshop.com</field>
+        </record>
+
+        <!-- Platform: Lazada -->
+        <record id="platform_lazada" model="ecommerce.platform">
+            <field name="name">Lazada</field>
+            <field name="code">lazada</field>
+            <field name="sequence">3</field>
+            <field name="color">#0F156D</field>
+            <field name="icon">fa-gift</field>
+            <field name="oauth_url">https://auth.lazada.com/oauth/authorize</field>
+            <field name="api_endpoint">https://api.lazada.vn/rest</field>
+        </record>
+
+        <!-- Platform: Amazon -->
+        <record id="platform_amazon" model="ecommerce.platform">
+            <field name="name">Amazon</field>
+            <field name="code">amazon</field>
+            <field name="sequence">4</field>
+            <field name="color">#FF9900</field>
+            <field name="icon">fa-amazon</field>
+            <field name="oauth_url">https://sellercentral.amazon.com/apps/authorize/consent</field>
+            <field name="api_endpoint">https://sellingpartnerapi-na.amazon.com</field>
+        </record>
+
+    </data>
+</odoo>

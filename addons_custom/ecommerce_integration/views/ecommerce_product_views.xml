@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+    <!-- Tree View for Products -->
+    <record id="view_ecommerce_product_tree" model="ir.ui.view">
+        <field name="name">ecommerce.product.tree</field>
+        <field name="model">ecommerce.product</field>
+        <field name="arch" type="xml">
+            <list string="Sản phẩm sàn" create="false">
+                <field name="image" widget="image" options="{'size': [40, 40]}"/>
+                <field name="name"/>
+                <field name="product_id" string="ID sàn"/>
+                <field name="sku"/>
+                <field name="shop_id"/>
+                <field name="platform_id"/>
+                <field name="price" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                <field name="stock_quantity"/>
+                <field name="status" decoration-success="status == 'active'" 
+                       decoration-danger="status == 'out_of_stock'"
+                       widget="badge"/>
+                <field name="is_synced" widget="boolean_toggle"/>
+                <field name="currency_id" column_invisible="1"/>
+                <button name="action_sync_to_odoo" type="object" 
+                        string="Đồng bộ" 
+                        class="btn-primary" 
+                        invisible="is_synced"
+                        icon="fa-refresh"/>
+                <button name="action_open_odoo_product" type="object" 
+                        string="Xem trong Odoo" 
+                        class="btn-link" 
+                        invisible="not is_synced"
+                        icon="fa-external-link"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Form View for Product -->
+    <record id="view_ecommerce_product_form" model="ir.ui.view">
+        <field name="name">ecommerce.product.form</field>
+        <field name="model">ecommerce.product</field>
+        <field name="arch" type="xml">
+            <form string="Chi tiết sản phẩm">
+                <header>
+                    <button name="action_sync_to_odoo" type="object" 
+                            string="Đồng bộ vào Odoo" 
+                            class="btn-primary"
+                            invisible="is_synced"/>
+                    <button name="action_open_odoo_product" type="object" 
+                            string="Xem sản phẩm Odoo" 
+                            class="btn-secondary"
+                            invisible="not is_synced"/>
+                    <field name="status" widget="statusbar" statusbar_visible="active,inactive,out_of_stock"/>
+                </header>
+                <sheet>
+                    <field name="image" widget="image" class="oe_avatar"/>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="Tên sản phẩm"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="product_id"/>
+                            <field name="sku"/>
+                            <field name="barcode"/>
+                            <field name="shop_id" options="{'no_create': True}"/>
+                            <field name="platform_id"/>
+                        </group>
+                        <group>
+                            <field name="category_name"/>
+                            <field name="price"/>
+                            <field name="cost_price"/>
+                            <field name="stock_quantity"/>
+                            <field name="is_synced" widget="boolean_toggle"/>
+                            <field name="last_sync_date" invisible="not is_synced"/>
+                        </group>
+                    </group>
+                    
+                    <notebook>
+                        <page string="Mô tả">
+                            <field name="description" placeholder="Mô tả sản phẩm..."/>
+                        </page>
+                        <page string="Kích thước &amp; Trọng lượng">
+                            <group>
+                                <group>
+                                    <field name="weight" string="Trọng lượng (kg)"/>
+                                    <field name="length" string="Dài (cm)"/>
+                                </group>
+                                <group>
+                                    <field name="width" string="Rộng (cm)"/>
+                                    <field name="height" string="Cao (cm)"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Liên kết Odoo" invisible="not is_synced">
+                            <group>
+                                <field name="odoo_product_id" options="{'no_create': True}"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Search View -->
+    <record id="view_ecommerce_product_search" model="ir.ui.view">
+        <field name="name">ecommerce.product.search</field>
+        <field name="model">ecommerce.product</field>
+        <field name="arch" type="xml">
+            <search string="Tìm kiếm sản phẩm">
+                <field name="name"/>
+                <field name="product_id"/>
+                <field name="sku"/>
+                <field name="shop_id"/>
+                <field name="platform_id"/>
+                <filter string="Đang bán" name="active" domain="[('status', '=', 'active')]"/>
+                <filter string="Hết hàng" name="out_of_stock" domain="[('status', '=', 'out_of_stock')]"/>
+                <filter string="Đã đồng bộ" name="synced" domain="[('is_synced', '=', True)]"/>
+                <filter string="Chưa đồng bộ" name="not_synced" domain="[('is_synced', '=', False)]"/>
+                <group expand="0" string="Nhóm theo">
+                    <filter string="Gian hàng" name="group_shop" context="{'group_by': 'shop_id'}"/>
+                    <filter string="Nền tảng" name="group_platform" context="{'group_by': 'platform_id'}"/>
+                    <filter string="Trạng thái" name="group_status" context="{'group_by': 'status'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Wizard Form View -->
+    <record id="view_ecommerce_product_import_wizard_form" model="ir.ui.view">
+        <field name="name">ecommerce.product.import.wizard.form</field>
+        <field name="model">ecommerce.product.import.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Import sản phẩm từ sàn">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="shop_id" options="{'no_create': True}"/>
+                            <field name="platform_id"/>
+                        </group>
+                    </group>
+                    
+                    <separator string="Điều kiện import"/>
+                    <group>
+                        <group>
+                            <field name="import_type"/>
+                            <field name="category_filter"/>
+                        </group>
+                        <group>
+                            <field name="min_price"/>
+                            <field name="max_price"/>
+                        </group>
+                    </group>
+                    
+                    <separator string="Tùy chọn"/>
+                    <group>
+                        <field name="auto_sync_to_odoo"/>
+                        <field name="update_existing"/>
+                    </group>
+                    
+                    <div class="alert alert-info mt-3" role="alert">
+                        <p><i class="fa fa-info-circle"/> <b>Lưu ý:</b></p>
+                        <ul>
+                            <li>Import sản phẩm sẽ lấy dữ liệu từ API của sàn</li>
+                            <li>Nếu chọn "Tự động đồng bộ vào Odoo", sản phẩm sẽ được tạo luôn trong kho Odoo</li>
+                            <li>Quá trình có thể mất vài phút tùy thuộc số lượng sản phẩm</li>
+                        </ul>
+                    </div>
+                </sheet>
+                <footer>
+                    <button name="action_import_products" type="object" string="Bắt đầu Import" class="btn-primary"/>
+                    <button name="action_view_imported_products" type="object" string="Xem sản phẩm đã có" class="btn-secondary"/>
+                    <button string="Hủy" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+</odoo>

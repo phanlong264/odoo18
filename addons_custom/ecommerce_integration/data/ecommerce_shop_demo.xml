@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        
+        <!-- Demo Shop: Shopee 1 -->
+        <record id="demo_shop_shopee_1" model="ecommerce.shop">
+            <field name="name">Gian hàng Điện tử ABC</field>
+            <field name="shop_id">123456789</field>
+            <field name="platform_id" ref="platform_shopee"/>
+            <field name="status">active</field>
+            <field name="access_token">demo_token_shopee_1</field>
+            <field name="shop_url">https://shopee.vn/shop/123456789</field>
+            <field name="owner_name">Nguyễn Văn A</field>
+            <field name="phone">0901234567</field>
+            <field name="email">nguyenvana@example.com</field>
+            <field name="last_sync_date" eval="(DateTime.now() - timedelta(hours=2)).strftime('%Y-%m-%d %H:%M:%S')"/>
+            <field name="token_expire_date" eval="(DateTime.now() + timedelta(days=25)).strftime('%Y-%m-%d %H:%M:%S')"/>
+            <field name="notes">Gian hàng chuyên kinh doanh điện tử, thiết bị công nghệ</field>
+        </record>
+
+        <!-- Demo Shop: Shopee 2 -->
+        <record id="demo_shop_shopee_2" model="ecommerce.shop">
+            <field name="name">Shop Thời Trang XYZ</field>
+            <field name="shop_id">987654321</field>
+            <field name="platform_id" ref="platform_shopee"/>
+            <field name="status">expired</field>
+            <field name="shop_url">https://shopee.vn/shop/987654321</field>
+            <field name="owner_name">Trần Thị B</field>
+            <field name="phone">0912345678</field>
+            <field name="email">tranthib@example.com</field>
+            <field name="last_sync_date" eval="(DateTime.now() - timedelta(days=5)).strftime('%Y-%m-%d %H:%M:%S')"/>
+            <field name="token_expire_date" eval="(DateTime.now() - timedelta(days=2)).strftime('%Y-%m-%d %H:%M:%S')"/>
+            <field name="notes">Token hết hạn, cần làm mới kết nối</field>
+        </record>
+
+        <!-- Demo Shop: TikTok Shop 1 -->
+        <record id="demo_shop_tiktok_1" model="ecommerce.shop">
+            <field name="name">TikTok Mỹ Phẩm 365</field>
+            <field name="shop_id">TT555666777</field>
+            <field name="platform_id" ref="platform_tiktok"/>
+            <field name="status">active</field>
+            <field name="access_token">demo_token_tiktok_1</field>
+            <field name="shop_url">https://shop.tiktok.com/@mypham365</field>
+            <field name="owner_name">Lê Văn C</field>
+            <field name="phone">0923456789</field>
+            <field name="email">levanc@example.com</field>
+            <field name="last_sync_date" eval="(DateTime.now() - timedelta(minutes=30)).strftime('%Y-%m-%d %H:%M:%S')"/>
+            <field name="token_expire_date" eval="(DateTime.now() + timedelta(days=28)).strftime('%Y-%m-%d %H:%M:%S')"/>
+            <field name="notes">Gian hàng mỹ phẩm chính hãng, đang hoạt động tốt</field>
+        </record>
+
+        <!-- Demo Shop: Lazada 1 -->
+        <record id="demo_shop_lazada_1" model="ecommerce.shop">
+            <field name="name">Lazada Gia Dụng Smart</field>
+            <field name="shop_id">LZ111222333</field>
+            <field name="platform_id" ref="platform_lazada"/>
+            <field name="status">active</field>
+            <field name="access_token">demo_token_lazada_1</field>
+            <field name="shop_url">https://www.lazada.vn/shop/giadungsmart</field>
+            <field name="owner_name">Phạm Thị D</field>
+            <field name="phone">0934567890</field>
+            <field name="email">phamthid@example.com</field>
+            <field name="last_sync_date" eval="(DateTime.now() - timedelta(hours=1)).strftime('%Y-%m-%d %H:%M:%S')"/>
+            <field name="token_expire_date" eval="(DateTime.now() + timedelta(days=20)).strftime('%Y-%m-%d %H:%M:%S')"/>
+            <field name="notes">Chuyên đồ gia dụng thông minh</field>
+        </record>
+
+        <!-- Demo Shop: Amazon 1 -->
+        <record id="demo_shop_amazon_1" model="ecommerce.shop">
+            <field name="name">Amazon Books Store</field>
+            <field name="shop_id">AMZ999888777</field>
+            <field name="platform_id" ref="platform_amazon"/>
+            <field name="status">pending</field>
+            <field name="shop_url">https://www.amazon.com/stores/booksstore</field>
+            <field name="owner_name">Hoàng Văn E</field>
+            <field name="phone">0945678901</field>
+            <field name="email">hoangvane@example.com</field>
+            <field name="notes">Đang chờ xác thực tài khoản từ Amazon</field>
+        </record>
+
+        <!-- Demo Shop: TikTok Shop 2 -->
+        <record id="demo_shop_tiktok_2" model="ecommerce.shop">
+            <field name="name">TikTok Phụ Kiện Hot</field>
+            <field name="shop_id">TT444333222</field>
+            <field name="platform_id" ref="platform_tiktok"/>
+            <field name="status">active</field>
+            <field name="access_token">demo_token_tiktok_2</field>
+            <field name="shop_url">https://shop.tiktok.com/@phukienhot</field>
+            <field name="owner_name">Vũ Thị F</field>
+            <field name="phone">0956789012</field>
+            <field name="email">vuthif@example.com</field>
+            <field name="last_sync_date" eval="(DateTime.now() - timedelta(hours=3)).strftime('%Y-%m-%d %H:%M:%S')"/>
+            <field name="token_expire_date" eval="(DateTime.now() + timedelta(days=27)).strftime('%Y-%m-%d %H:%M:%S')"/>
+            <field name="notes">Phụ kiện điện thoại, tai nghe, case</field>
+        </record>
+
+    </data>
+</odoo>

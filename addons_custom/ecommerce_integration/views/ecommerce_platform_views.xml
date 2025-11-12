@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Form View for Platform -->
+    <record id="view_ecommerce_platform_form" model="ir.ui.view">
+        <field name="name">ecommerce.platform.form</field>
+        <field name="model">ecommerce.platform</field>
+        <field name="arch" type="xml">
+            <form string="Cấu hình sàn TMĐT">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="code"/>
+                            <field name="sequence"/>
+                            <field name="shop_count" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="color" widget="color"/>
+                            <field name="icon"/>
+                            <field name="active"/>
+                        </group>
+                    </group>
+                    <group string="Cấu hình API">
+                        <group>
+                            <field name="oauth_url" placeholder="https://oauth.platform.com/authorize"/>
+                        </group>
+                        <group>
+                            <field name="api_endpoint" placeholder="https://api.platform.com/v1"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- List View for Platform -->
+    <record id="view_ecommerce_platform_tree" model="ir.ui.view">
+        <field name="name">ecommerce.platform.tree</field>
+        <field name="model">ecommerce.platform</field>
+        <field name="arch" type="xml">
+            <list string="Danh sách sàn TMĐT">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="code"/>
+                <field name="shop_count"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Action for Platform -->
+    <record id="action_ecommerce_platform" model="ir.actions.act_window">
+        <field name="name">Sàn TMĐT</field>
+        <field name="res_model">ecommerce.platform</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- Menu -->
+    <menuitem id="menu_ecommerce_platform"
+              name="Sàn TMĐT"
+              parent="menu_ecommerce_configuration"
+              action="action_ecommerce_platform"
+              sequence="10"/>
+
+</odoo>
